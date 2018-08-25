@@ -21,8 +21,8 @@ dragElem.addEventListener('mousedown', function mdown(estart) {
 
   function mmove(emove) {
 
-    posx = getBounds(emove.pageX - startx, dragElemWidth, parentElemWidth);
-    posy = getBounds(emove.pageY - starty, dragElemHeight, parentElemHeight);
+    posx = getLimit(emove.pageX - startx, dragElemWidth, parentElemWidth);
+    posy = getLimit(emove.pageY - starty, dragElemHeight, parentElemHeight);
 
     if (transSupport) {
       dragElem.style.transform = 'translateZ(0) translate3d(' + (posx - initLeft) + 'px, ' + (posy - initTop) + 'px, 0px)';
@@ -41,7 +41,7 @@ dragElem.addEventListener('mousedown', function mdown(estart) {
 });
 
 
-function getBounds (pos, elemBounds, parentBounds) {
+function getLimit(pos, elemBounds, parentBounds) {
 
   if (pos < 0) return 0
   else if (pos + elemBounds > parentBounds) return parentBounds - elemBounds;
