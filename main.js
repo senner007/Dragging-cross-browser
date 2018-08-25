@@ -6,12 +6,11 @@ var parentElem = document.querySelector('#parent'),
     parentElemWidth = parseInt(parentElem.clientWidth),
     parentElemHeight = parseInt(parentElem.clientHeight);
 
-var posx = parseInt(window.getComputedStyle(dragElem).left);
-var posy = parseInt(window.getComputedStyle(dragElem).top);
+var posx = parseInt(window.getComputedStyle(dragElem).left),
+    posy = parseInt(window.getComputedStyle(dragElem).top);
 
-var startLeft = posx;
-var startTop = posy;
-
+var initLeft = posx,
+    initTop = posy;
 
 dragElem.addEventListener('mousedown', function mdown(estart) {
 
@@ -22,14 +21,11 @@ dragElem.addEventListener('mousedown', function mdown(estart) {
 
   function mmove(emove) {
 
-    posx = emove.pageX - startx;
-    posy = emove.pageY - starty;
-
-    posx = getBounds(posx, dragElemWidth, parentElemWidth);
-    posy = getBounds(posy, dragElemHeight, parentElemHeight);
+    posx = getBounds(emove.pageX - startx, dragElemWidth, parentElemWidth);
+    posy = getBounds(emove.pageY - starty, dragElemHeight, parentElemHeight);
 
     if (transSupport) {
-      dragElem.style.transform = 'translateZ(0) translate3d(' + (posx - startLeft) + 'px, ' + (posy - startTop) + 'px, 0px)';
+      dragElem.style.transform = 'translateZ(0) translate3d(' + (posx - initLeft) + 'px, ' + (posy - initTop) + 'px, 0px)';
     } else {
       dragElem.style.left = posx + 'px';
       dragElem.style.top = posy + 'px';
@@ -39,7 +35,6 @@ dragElem.addEventListener('mousedown', function mdown(estart) {
   window.addEventListener('mousemove', mmove);
 
   window.addEventListener('mouseup', function (eup) {
-    console.log('up')
     window.removeEventListener('mousemove', mmove)
   });
 
