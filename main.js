@@ -34,7 +34,8 @@ dragElem.addEventListener('mousedown', function mdown(estart) {
 
   window.addEventListener('mousemove', mmove);
 
-  window.addEventListener('mouseup', function (eup) {
+  window.addEventListener('mouseup', function mup (eup) {
+    window.removeEventListener('mouseup', mup);
     window.removeEventListener('mousemove', mmove)
   });
 
