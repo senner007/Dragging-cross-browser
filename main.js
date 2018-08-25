@@ -41,10 +41,10 @@ dragElem.addEventListener('mousedown', function mdown(estart) {
 });
 
 
-function getBounds (pos, elemSize, parentSize) {
+function getBounds (pos, elemBounds, parentBounds) {
 
   if (pos < 0) return 0
-  else if (pos + elemSize > parentSize) return parentSize - elemSize;
+  else if (pos + elemBounds > parentBounds) return parentBounds - elemBounds;
   else return pos
 
 }
