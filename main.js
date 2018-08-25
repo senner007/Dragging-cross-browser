@@ -12,6 +12,7 @@ var posy = parseInt(window.getComputedStyle(dragElem).top);
 var startLeft = posx;
 var startTop = posy;
 
+
 dragElem.addEventListener('mousedown', function mdown(estart) {
 
   estart.preventDefault();
@@ -24,26 +25,15 @@ dragElem.addEventListener('mousedown', function mdown(estart) {
     posx = emove.pageX - startx;
     posy = emove.pageY - starty;
 
-    ;(function () {
-      if (posx < 0) posx = 0;
-      if (posx + dragElemWidth > parentElemWidth) {
-        posx = parentElemWidth - dragElemWidth;
-      }
-
-      if (posy < 0) posy = 0
-
-      if (posy + dragElemHeight > parentElemHeight) {
-        posy = parentElemHeight - dragElemHeight;
-      }
-    }());
+    posx = getBounds(posx, dragElemWidth, parentElemWidth);
+    posy = getBounds(posy, dragElemHeight, parentElemHeight);
 
     if (transSupport) {
       dragElem.style.transform = 'translateZ(0) translate3d(' + (posx - startLeft) + 'px, ' + (posy - startTop) + 'px, 0px)';
     } else {
       dragElem.style.left = posx + 'px';
       dragElem.style.top = posy + 'px';
-    }
-   
+    }  
   }
 
   window.addEventListener('mousemove', mmove);
@@ -55,6 +45,14 @@ dragElem.addEventListener('mousedown', function mdown(estart) {
 
 });
 
+
+function getBounds (pos, elemSize, parentSize) {
+
+  if (pos < 0) return 0
+  else if (pos + elemSize > parentSize) return parentSize - elemSize;
+  else return pos
+
+}
 
 var transSupport = (function supportsTransitions() {
   var b = document.body || document.documentElement,
